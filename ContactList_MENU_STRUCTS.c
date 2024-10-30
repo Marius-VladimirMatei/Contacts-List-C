@@ -16,7 +16,7 @@ void addContact(Contact inventory[], int* itemCount);
 void showContacts(Contact inventory[], int itemCount);
 void searchContacts(Contact inventory[], int itemCount);
 
-void main() {
+int main() {
     Contact inventory[max_items];
     int itemCount = 0;
     int choice;
@@ -27,8 +27,10 @@ void main() {
         printf("2. Show all contacts\n");
         printf("3. Search for a contact\n");
         printf("4. Exit\n");
-        printf("Choose an option (1-4): ");
+        printf("Choose an option (1-4):\n");
+        printf_s("__________________________________\n");
         scanf_s("%d", &choice);
+        
 
         // Clear input buffer
         while (getchar() != '\n');
@@ -62,11 +64,12 @@ void addContact(Contact inventory[], int* itemCount) {
     }
 
     // Prompt for contact name
-    printf_s("Enter your contact name: ");
+    printf_s("Enter your contact name: \n");
+    printf_s("__________________________________\n");
     fgets(inventory[*itemCount].name, max_phone_length, stdin);
 
     // Remove newline
-    inventory[*itemCount].name[strcspn(inventory[*itemCount].name, "\n")] = 0; 
+    inventory[*itemCount].name[strcspn(inventory[*itemCount].name, "\n")] = 0;
 
     // Check if input is empty
     if (strlen(inventory[*itemCount].name) == 0) {
@@ -96,14 +99,15 @@ void showContacts(Contact inventory[], int itemCount) {
     printf_s("\nYour contact list contains:\n");
     for (int i = 0; i < itemCount; i++) {
         printf_s("%d. %s - phone number: %s\n", i + 1, inventory[i].name, inventory[i].phone);
-        printf_s("__________________________________\n");
+        
     }
+    printf_s("__________________________________\n");
 }
 
 // Function to search for an contact by name
 void searchContacts(Contact inventory[], int itemCount) {
     char searchName[max_phone_length];
-    printf_s("Enter the name of the item to search for: ");
+    printf_s("Enter the name of the item to search for: \n");
     printf_s("__________________________________\n");
     fgets(searchName, max_phone_length, stdin);
     searchName[strcspn(searchName, "\n")] = 0; // Remove newline
