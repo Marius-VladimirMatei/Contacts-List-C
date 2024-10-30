@@ -14,6 +14,7 @@ typedef struct {
 // Function prototypes
 void addContact(Contact inventory[], int* itemCount);
 void showContacts(Contact inventory[], int itemCount);
+void searchContacts(Contact inventory[], int itemCount);
 
 void main() {
     Contact inventory[max_items];
@@ -22,10 +23,11 @@ void main() {
 
     while (1) {
         // Display the menu
-        printf_s("1. Add the contact name\n");
-        printf_s("2. Show all contacts\n");
-        printf_s("3. Exit\n");
-        printf_s("Choose an option (1-3): ");
+        printf("1. Add the contact name\n");
+        printf("2. Show all contacts\n");
+        printf("3. Search for a contact\n");
+        printf("4. Exit\n");
+        printf("Choose an option (1-4): ");
         scanf_s("%d", &choice);
 
         // Clear input buffer
@@ -39,6 +41,9 @@ void main() {
             showContacts(inventory, itemCount);
             break;
         case 3:
+            searchContacts(inventory, itemCount);
+            break;
+        case 4:
             printf_s("Exiting...\n");
             return 0;
         default:
@@ -52,6 +57,7 @@ void addContact(Contact inventory[], int* itemCount) {
     // Check if the inventory is full
     if (*itemCount >= max_items) {
         printf_s("Your list is full.\n");
+        printf_s("__________________________________\n");
         return;
     }
 
@@ -65,6 +71,7 @@ void addContact(Contact inventory[], int* itemCount) {
     // Check if input is empty
     if (strlen(inventory[*itemCount].name) == 0) {
         printf_s("Please enter a contact name.\n");
+        printf_s("__________________________________\n");
         return; // Do not increment itemCount
     }
 
@@ -82,11 +89,37 @@ void addContact(Contact inventory[], int* itemCount) {
 void showContacts(Contact inventory[], int itemCount) {
     if (itemCount == 0) {
         printf_s("Your contact list is empty.\n");
+        printf_s("__________________________________\n");
         return;
     }
 
     printf_s("\nYour contact list contains:\n");
     for (int i = 0; i < itemCount; i++) {
         printf_s("%d. %s - phone number: %s\n", i + 1, inventory[i].name, inventory[i].phone);
+        printf_s("__________________________________\n");
+    }
+}
+
+// Function to search for an contact by name
+void searchContacts(Contact inventory[], int itemCount) {
+    char searchName[max_phone_length];
+    printf_s("Enter the name of the item to search for: ");
+    printf_s("__________________________________\n");
+    fgets(searchName, max_phone_length, stdin);
+    searchName[strcspn(searchName, "\n")] = 0; // Remove newline
+
+    int found = 0;
+    for (int i = 0; i < itemCount; i++) {
+        if (strcmp(inventory[i].name, searchName) == 0) {
+            printf("Contact found: %s - phone number: %s\n", inventory[i].name, inventory[i].phone);
+            found = 1;
+            printf_s("__________________________________\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Contact '%s' not found in inventory.\n", searchName);
+        printf_s("__________________________________\n");
     }
 }
