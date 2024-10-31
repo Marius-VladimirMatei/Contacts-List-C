@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 // Variables to define the array size
 #define max_items 2
 #define max_phone_length 15
@@ -20,17 +21,19 @@ int main() {
     Contact inventory[max_items];
     int itemCount = 0;
     int choice;
+    
 
     while (1) {
         // Display the menu
+        printf_s("_________________________________________\n");
         printf("1. Add the contact name\n");
         printf("2. Show all contacts\n");
         printf("3. Search for a contact\n");
         printf("4. Exit\n");
         printf("Choose an option (1-4):\n");
-        printf_s("__________________________________\n");
+        printf_s("_________________________________________\n");
         scanf_s("%d", &choice);
-        
+
 
         // Clear input buffer
         while (getchar() != '\n');
@@ -99,9 +102,9 @@ void showContacts(Contact inventory[], int itemCount) {
     printf_s("\nYour contact list contains:\n");
     for (int i = 0; i < itemCount; i++) {
         printf_s("%d. %s - phone number: %s\n", i + 1, inventory[i].name, inventory[i].phone);
-        
+
     }
-    printf_s("__________________________________\n");
+    
 }
 
 // Function to search for an contact by name
@@ -124,6 +127,6 @@ void searchContacts(Contact inventory[], int itemCount) {
 
     if (!found) {
         printf("Contact '%s' not found in inventory.\n", searchName);
-        printf_s("__________________________________\n");
+       
     }
 }
